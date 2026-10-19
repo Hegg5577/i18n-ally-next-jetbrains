@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "com.hegg5577.i18n"
-version = "0.1.0"
+version = "0.1.1"
 
 repositories {
     mavenCentral()

@@ -5,6 +5,16 @@
     <vendor>hegg5577</vendor>
 
     <description><![CDATA[
+    Manage localization files, preview translations in your code, and edit multilingual keys in JetBrains IDEs.<br/>
+    <b>Features:</b>
+    <ul>
+      <li>Compare and edit translations across multiple languages.</li>
+      <li>Preview translations with inline hints and hover documentation.</li>
+      <li>Find missing and unused keys, and perform bulk key operations.</li>
+      <li>Translate with Google, DeepL, or OpenAI using your configured service.</li>
+      <li>Configure locale paths and source scanning through IDE settings or .i18nrc.yml.</li>
+    </ul>
+    <b>中文介绍：</b><br/>
     前端国际化（i18n）辅助插件，提供语言包管理、翻译预览与编辑功能。<br/>
     <b>核心功能：</b>
     <ul>
