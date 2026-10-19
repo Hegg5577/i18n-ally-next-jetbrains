@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<idea-plugin>
+    <id>com.hegg5577.i18n.helper</id>
+    <name>i18n Helper</name>
+    <vendor>hegg5577</vendor>
+
+    <description><![CDATA[
+    前端国际化（i18n）辅助插件，提供语言包管理、翻译预览与编辑功能。<br/>
+    <b>核心功能：</b>
+    <ul>
+      <li>📋 多语言对照表 - 侧边栏展示所有语言的翻译状态</li>
+      <li>🔍 智能检测 - 自动识别缺失/过期/未使用的 key</li>
+      <li>✏️ 便捷编辑 - 双击编辑、一键提取、批量操作</li>
+      <li>🌐 多引擎翻译 - Google / DeepL / OpenAI 支持</li>
+      <li>⚙️ 灵活配置 - 全局 Settings + 项目级 .i18nrc.yml</li>
+      <li>🎯 编辑器集成 - Hover 预览、行内译文、Key 重命名操作</li>
+    </ul>
+    支持 i18next、vue-i18n、react-i18next、i18n-js 等框架，覆盖 js/jsx/ts/tsx/vue/html。
+    ]]></description>
+
+    <depends>com.intellij.modules.platform</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <notificationGroup id="i18n.helper.notifications"
+                           displayType="BALLOON"
+                           isLogByDefault="true"/>
+
+        <!-- 项目打开时初始化 YAML 配置加载 -->
+        <projectListener
+                implementation="com.hegg5577.i18n.startup.I18nProjectOpenListener"/>
+
+        <!-- PsiReference 支持：识别 t('key') 中的 key 引用 -->
+        <psi.referenceContributor
+                implementation="com.hegg5577.i18n.editor.I18nPsiReferenceContributor"
+                language="JavaScript"/>
+        <psi.referenceContributor
+                implementation="com.hegg5577.i18n.editor.I18nPsiReferenceContributor"
+                language="TypeScript"/>
+        <psi.referenceContributor
+                implementation="com.hegg5577.i18n.editor.I18nPsiReferenceContributor"
+                language="HTML"/>
+        <psi.referenceContributor
+                implementation="com.hegg5577.i18n.editor.I18nPsiReferenceContributor"
+                language="Vue"/>
+
+        <!-- 行内译文提示：在 t('key') 之后显示对应语言的译文。
+             覆盖 js / jsx / ts / tsx / vue / html，语言清单见 I18nInlayProviderFactory。 -->
+        <codeInsight.declarativeInlayProviderFactory
+                implementation="com.hegg5577.i18n.editor.I18nInlayProviderFactory"/>
+
+        <!-- Hover 多语言预览：鼠标悬停在 t('key') 上显示所有语言的翻译。 -->
+        <documentationProvider
+                implementation="com.hegg5577.i18n.editor.I18nHoverDocumentationProvider"
+                language="JavaScript"/>
+        <documentationProvider
+                implementation="com.hegg5577.i18n.editor.I18nHoverDocumentationProvider"
+                language="TypeScript"/>
+        <documentationProvider
+                implementation="com.hegg5577.i18n.editor.I18nHoverDocumentationProvider"
+                language="ECMAScript 6"/>
+        <documentationProvider
+                implementation="com.hegg5577.i18n.editor.I18nHoverDocumentationProvider"
+                language="TypeScript JSX"/>
+        <documentationProvider
+                implementation="com.hegg5577.i18n.editor.I18nHoverDocumentationProvider"
+                language="HTML"/>
+        <documentationProvider
+                implementation="com.hegg5577.i18n.editor.I18nHoverDocumentationProvider"
+                language="Vue"/>
+
+        <!-- 硬编码字符串提取：右键菜单或 Alt+Enter 提取字符串为 i18n key。 -->
+        <intentionAction>
+            <className>com.hegg5577.i18n.actions.ExtractStringIntention</className>
+            <category>i18n</category>
+        </intentionAction>
+
+        <!-- 设置页：语言包路径、路径模式、源语言、匹配正则全部可配。 -->
+        <projectConfigurable parentId="tools"
+                             instance="com.hegg5577.i18n.settings.I18nConfigurable"
+                             id="com.hegg5577.i18n.settings"
+                             displayName="i18n Helper"/>
+
+        <!-- 侧边栏 i18n 面板：多语言对照表 + 翻译进度。 -->
+        <toolWindow id="i18n-helper"
+                    anchor="right"
+                    factoryClass="com.hegg5577.i18n.ui.I18nToolWindowFactory"/>
+    </extensions>
+
+    <actions>
+        <action id="com.hegg5577.i18n.ShowPanel"
+                class="com.hegg5577.i18n.actions.ShowPanelAction"
+                text="i18n: 打开翻译面板"
+                description="在侧边栏打开多语言翻译对照表">
+            <add-to-group group-id="ToolsMenu" anchor="last"/>
+        </action>
+
+        <action id="com.hegg5577.i18n.RefreshPanel"
+                class="com.hegg5577.i18n.actions.RefreshPanelAction"
+                text="i18n: 刷新翻译面板"
+                description="重新扫描语言包并刷新侧边栏表格">
+            <add-to-group group-id="ToolsMenu" anchor="last"/>
+        </action>
+
+        <action id="com.hegg5577.i18n.ScanLocales"
+                class="com.hegg5577.i18n.actions.ScanLocalesAction"
+                text="i18n: 扫描语言包一致性"
+                description="扫描项目内的 i18n 语言包，统计各语言 key 的缺失与多余情况">
+            <add-to-group group-id="ToolsMenu" anchor="last"/>
+        </action>
+
+        <action id="com.hegg5577.i18n.DiagnoseCurrentFile"
+                class="com.hegg5577.i18n.actions.DiagnoseCurrentFileAction"
+                text="i18n: 诊断当前文件的译文提示"
+                description="逐步检查当前文件为何显示/不显示行内译文提示，并预览将要显示的译文">
+            <add-to-group group-id="ToolsMenu" anchor="last"/>
+        </action>
+
+        <action id="com.hegg5577.i18n.BatchTranslate"
+                class="com.hegg5577.i18n.actions.BatchTranslateAction"
+                text="i18n: 批量翻译缺失文案"
+                description="以源语言为准，把各语言缺失的 key 机器翻译补齐，写入前先预览确认">
+            <add-to-group group-id="ToolsMenu" anchor="last"/>
+        </action>
+
+        <action id="com.hegg5577.i18n.BatchDeleteKeys"
+                class="com.hegg5577.i18n.actions.BatchDeleteKeysAction"
+                text="i18n: 批量删除 Key"
+                description="从侧边栏表格中选中多个 key，一次删除">
+            <add-to-group group-id="ToolsMenu" anchor="last"/>
+        </action>
+
+        <action id="com.hegg5577.i18n.BatchRenameKeys"
+                class="com.hegg5577.i18n.actions.BatchRenameKeysAction"
+                text="i18n: 批量重命名 Key"
+                description="对侧边栏表格中选中的 key 进行批量重命名">
+            <add-to-group group-id="ToolsMenu" anchor="last"/>
+        </action>
+
+        <action id="com.hegg5577.i18n.GenerateTypeDefinitions"
+                class="com.hegg5577.i18n.actions.GenerateTypeDefinitionsAction"
+                text="i18n: 生成 TypeScript 类型定义"
+                description="从翻译键自动生成 TypeScript 类型定义、Schema 和 Vue 3 类型">
+            <add-to-group group-id="ToolsMenu" anchor="last"/>
+        </action>
+
+        <action id="com.hegg5577.i18n.CheckTranslationQuality"
+                class="com.hegg5577.i18n.actions.CheckTranslationQualityAction"
+                text="i18n: 检查翻译质量"
+                description="验证翻译中的参数一致性、占位符完整性等问题">
+            <add-to-group group-id="ToolsMenu" anchor="last"/>
+        </action>
+    </actions>
+</idea-plugin>
