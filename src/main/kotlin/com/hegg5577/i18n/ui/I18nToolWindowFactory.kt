@@ -195,6 +195,12 @@ class I18nToolWindowFactory : ToolWindowFactory {
         const val TOOL_WINDOW_ID = "i18n-helper"
     }
 
+    /** 保留窗口标识以兼容已有布局，在注册时统一侧边栏和面板标题。 */
+    override fun init(toolWindow: ToolWindow) {
+        toolWindow.title = "i18n tool plus"
+        toolWindow.stripeTitle = "i18n tool plus"
+    }
+
     override fun createToolWindowContent(project: Project, toolWindow: ToolWindow) {
         val service = project.getService(I18nPanelService::class.java)
 
