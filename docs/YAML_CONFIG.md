@@ -1,4 +1,4 @@
-# i18n Helper - YAML 配置文件
+# i18n tool plus - YAML 配置文件
 
 ## 概述
 
@@ -57,7 +57,7 @@
 ### 全局配置 vs 项目配置
 
 **全局配置** (IDE Settings)
-- 位置：`Preferences > Tools > i18n Helper`
+- 位置：`Preferences > Tools > i18n tool plus`
 - 作用：所有打开的项目的默认配置
 - 场景：设置常用的翻译引擎 API Key
 

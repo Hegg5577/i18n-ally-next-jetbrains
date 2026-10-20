@@ -1,9 +1,9 @@
 #!/bin/bash
-# i18n Helper for JetBrains - 插件构建脚本
+# i18n tool plus - 插件构建脚本
 
 set -e
 
-echo "🔨 开始构建 i18n Helper 插件..."
+echo "🔨 开始构建 i18n tool plus 插件..."
 echo ""
 
 # 清理上次构建
@@ -36,7 +36,7 @@ if [ -n "$PLUGIN_FILE" ]; then
     echo "   4. 选择上面的 .zip 文件"
     echo "   5. 重启 IDE"
     echo ""
-    echo "✨ 安装完成后，在 Tools 菜单中会出现 i18n Helper 的选项"
+    echo "✨ 安装完成后，在 Tools 菜单中会出现 i18n tool plus 的选项"
 else
     echo "❌ 构建失败！"
     exit 1

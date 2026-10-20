@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <idea-plugin>
     <id>com.hegg5577.i18n.helper</id>
-    <name>i18n Helper</name>
+    <name>i18n tool plus</name>
     <vendor>hegg5577</vendor>
 
     <description><![CDATA[
@@ -88,7 +88,7 @@
         <projectConfigurable parentId="tools"
                              instance="com.hegg5577.i18n.settings.I18nConfigurable"
                              id="com.hegg5577.i18n.settings"
-                             displayName="i18n Helper"/>
+                             displayName="i18n tool plus"/>
 
         <!-- 侧边栏 i18n 面板：多语言对照表 + 翻译进度。 -->
         <toolWindow id="i18n-helper"

@@ -71,7 +71,8 @@ class I18nConfigurable(private val project: Project) : Configurable {
 
     private var panel: JComponent? = null
 
-    override fun getDisplayName(): String = "i18n Helper"
+    /** 与插件发布名称保持一致，方便用户定位设置入口。 */
+    override fun getDisplayName(): String = "i18n tool plus"
 
     override fun createComponent(): JComponent {
         val root = JPanel(BorderLayout())

@@ -102,7 +102,7 @@ class DiagnoseCurrentFileAction : AnAction() {
             ))
 
             add("加载判定" to listOf(
-                DiagnosticItem(context.inlineAnnotationEnabled, "已启用行内译文提示", "提示语言：$locale", if (context.inlineAnnotationEnabled) "" else "请在 i18n Helper 设置中启用"),
+                DiagnosticItem(context.inlineAnnotationEnabled, "已启用行内译文提示", "提示语言：$locale", if (context.inlineAnnotationEnabled) "" else "请在 i18n tool plus 设置中启用"),
                 DiagnosticItem(extSupported, "后缀在支持列表内", context.supportedExtensions.ifEmpty { TranslationIndex.DEFAULT_EXTENSIONS }.joinToString(" / "), if (extSupported) "" else "该文件不会被扫描"),
                 DiagnosticItem(langSupported, "语言 ID 已绑定 Provider", languageId, if (langSupported) "" else "需补进 I18nInlayProviderFactory.LANGUAGE_IDS"),
                 DiagnosticItem(providerVisible, "扩展点已生效", I18nInlayCollector.PROVIDER_ID, if (providerVisible) "" else "检查 plugin.xml 的 declarativeInlayProviderFactory"),
