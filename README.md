@@ -22,6 +22,8 @@
 
 配置说明见 [YAML 配置指南](docs/YAML_CONFIG.md) 和 [配置示例](.i18nrc.example.yml)。请勿在提交到 Git 的配置中写入真实 API 密钥。
 
+详细操作与常见问题见 [使用与排障指南](docs/USAGE.md)。
+
 ## 开发与打包
 
 安装可运行 Gradle 的 JDK，并设置 `JAVA_HOME`。项目使用 Gradle Wrapper，Kotlin 编译工具链配置为 Java 21。
