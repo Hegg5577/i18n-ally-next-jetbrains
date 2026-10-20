@@ -7,7 +7,11 @@ plugins {
 }
 
 group = "com.hegg5577.i18n"
-version = "0.1.1"
+version = "0.1.2"
+
+tasks.named<Zip>("buildPlugin") {
+    archiveBaseName.set("i18n-tool-plus")
+}
 
 repositories {
     mavenCentral()
